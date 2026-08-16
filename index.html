@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111827"><link rel="manifest" href="manifest.json">
+<title>CUET PG Geophysics</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--txt:#172033;--muted:#697386;--a:#315efb;--line:#e3e8f0;--good:#16845a;--bad:#c43b43}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:15px system-ui,sans-serif}
+header{background:#111827;color:#fff;padding:20px 16px}header h1{margin:0;font-size:21px}header p{margin:5px 0;color:#cbd5e1}
+nav{display:flex;gap:7px;overflow:auto;background:#fff;padding:9px;position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line)}
+button,select{font:inherit}button{cursor:pointer}nav button,.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;white-space:nowrap}nav button.active,.primary{background:var(--a);color:#fff;border-color:var(--a)}
+main{max-width:1000px;margin:auto;padding:14px}.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px;margin-bottom:12px}.metric{font-size:25px;font-weight:800}.muted{color:var(--muted);font-size:13px}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.mode{border:1px solid var(--line);background:#fff;border-radius:13px;padding:14px;text-align:left}.mode strong{display:block}.mode small{color:var(--muted)}
+.badge{display:inline-block;background:#eef2ff;color:#2949c7;padding:4px 9px;border-radius:99px;font-size:12px}.answer{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin:7px 0}.answer.correct{background:#edf9f3;border-color:var(--good)}.answer.wrong{background:#fff0f1;border-color:var(--bad)}
+.feedback{padding:12px;background:#f1f5f9;border-radius:12px;margin-top:10px}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.list{padding:11px 0;border-bottom:1px solid var(--line)}select{padding:8px;border:1px solid var(--line);border-radius:9px}.barbg{height:9px;background:#e9edf5;border-radius:9px;overflow:hidden}.bar{height:100%;background:var(--a)}
+.hidden{display:none}.timer{font-size:24px;font-weight:800}@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.modes{grid-template-columns:1fr 1fr}}
+</style></head>
+<body>
+<header><h1>CUET PG Geophysics</h1><p>Learn • Practice • Revise • Master</p></header>
+<nav><button class="active" data-p="home">🏠 Home</button><button data-p="practice">🎯 Practice</button><button data-p="mistakes">🧠 Mistakes</button><button data-p="syllabus">📚 Syllabus</button><button data-p="stats">📊 Stats</button></nav>
+<main>
+<section id="home" class="page active">
+<div class="grid"><div class="card"><div class="muted">Mastery</div><div class="metric" id="mastery">0%</div></div><div class="card"><div class="muted">Solved</div><div class="metric" id="solved">0</div></div><div class="card"><div class="muted">Accuracy</div><div class="metric" id="accuracy">—</div></div><div class="card"><div class="muted">Mistakes</div><div class="metric" id="mistakesN">0</div></div></div>
+<div class="card"><h2>⚡ Practice Marathon</h2><p class="muted">Choose your session.</p><div class="modes">
+<button class="mode" onclick="start(10,'Quick')"><strong>⚡ 10</strong><small>Quick</small></button>
+<button class="mode" onclick="start(25,'Standard')"><strong>🔥 25</strong><small>Standard</small></button>
+<button class="mode" onclick="start(50,'Marathon')"><strong>💪 50</strong><small>Marathon</small></button>
+<button class="mode" onclick="start(100,'Deep')"><strong>🚀 100</strong><small>Deep</small></button>
+<button class="mode" onclick="start(200,'Extreme')"><strong>🧨 200</strong><small>Extreme</small></button>
+<button class="mode" onclick="start(0,'Infinite')"><strong>♾️ Infinite</strong><small>Stop anytime</small></button>
+</div></div>
+<div class="grid2"><div class="card"><h3>🎯 Targeted</h3><button class="btn" onclick="start(25,'Weakness')">🔴 Fix Weaknesses</button> <button class="btn" onclick="start(25,'Hard')">🧨 Hard</button></div><div class="card"><h3>🔄 Revision</h3><p id="revisionSummary"></p><button class="btn" onclick="showPage('mistakes')">Open Mistake Bank</button></div></div>
+</section>
+<section id="practice" class="page"><div class="card"><div class="row"><span><span class="badge" id="mode"></span> <span class="badge" id="tag"></span></span><span class="timer" id="timer">00:00</span></div><div class="barbg" style="margin:12px 0"><div class="bar" id="progress" style="width:0%"></div></div><h2 id="q"></h2><div id="answers"></div><div id="feedback"></div><div id="confidence" class="hidden"><p><b>Confidence?</b></p><button class="btn" onclick="confidence(1)">1 Guess</button> <button class="btn" onclick="confidence(2)">2</button> <button class="btn" onclick="confidence(3)">3</button> <button class="btn" onclick="confidence(4)">4</button> <button class="btn" onclick="confidence(5)">5 Certain</button></div><button class="btn primary hidden" id="next" onclick="next()">Next →</button><button class="btn hidden" id="stop" onclick="finish()">Stop</button></div></section>
+<section id="mistakes" class="page"><div class="card"><h2>🧠 Mistake Bank</h2><div id="mistakeList"></div></div></section>
+<section id="syllabus" class="page"><div class="card"><h2>📚 Syllabus</h2><div id="syllabusList"></div></div></section>
+<section id="stats" class="page"><div class="card"><h2>📊 Statistics</h2><div id="statsList"></div></div></section>
+</main>
+<script>
+const Q=[
+["Mechanics & Waves","SHM","Medium","A particle executes SHM. At which position is kinetic energy maximum?",["x=A","x=0","x=A/2","x=A/√2"],1,"Kinetic energy is maximum at the mean position x=0."],
+["Mechanics & Waves","LCR","Medium","At series LCR resonance, impedance is?",["Maximum","Minimum","Infinite","Zero for every circuit"],1,"At resonance XL=XC, so Z=R."],
+["Mechanics & Waves","Momentum","Medium","A 2 kg body changes velocity from 3 to 7 m/s. Magnitude of momentum change?",["4","8","10","14"],1,"Δp=mΔv=2×4=8 kg m/s."],
+["Electromagnetism","Maxwell","Medium","Which Maxwell equation expresses absence of magnetic monopoles?",["∇·E=ρ/ε₀","∇·B=0","∇×E=−∂B/∂t","∇×B=μ₀J+μ₀ε₀∂E/∂t"],1,"Gauss's law for magnetism: ∇·B=0."],
+["Electromagnetism","Poynting","Hard","The direction of electromagnetic energy flow is given by?",["E×B","B×E","E+B","E·B"],0,"S=(1/μ₀)E×B in vacuum."],
+["Electromagnetism","Displacement current","Medium","Displacement current is associated with?",["Changing electric field","Static charge only","Changing mass","Gravity"],0,"It is associated with a changing electric field."],
+["Optics","Newton's rings","Medium","In reflected Newton's rings, the centre is dark mainly due to?",["Constructive interference","Destructive interference","No interference","Complete transmission"],1,"The reflected rays have an effective π phase difference at contact."],
+["Optics","Interference","Medium","Two equal-amplitude coherent waves have phase difference π. Resulting intensity?",["Maximum","Half maximum","Zero","Four times"],2,"Equal amplitudes cancel for phase difference π."],
+["Optics","Polarisation","Easy","Brewster's law for n1 to n2 is?",["tan iB=n1/n2","tan iB=n2/n1","sin iB=n1n2","cos iB=n2/n1"],1,"tan iB=n2/n1."],
+["Optics","Michelson","Medium","A Michelson interferometer primarily demonstrates?",["Interference","Photoelectric effect","Compton effect","Radioactivity"],0,"It produces interference by splitting and recombining beams."],
+["Optics","Diffraction","Hard","Fraunhofer diffraction generally uses source and observation effectively?",["At infinity / lenses","At contact","Inside slit","Random"],0,"Lenses can make the incident and diffracted waves effectively plane."],
+["Electronics","PN junction","Easy","Forward biasing a PN junction generally makes depletion width?",["Wider","Narrower","Infinite","Unchanged"],1,"Forward bias lowers the barrier and narrows the depletion region."],
+["Electronics","Rectifier","Easy","A bridge rectifier normally uses how many diodes?",["1","2","3","4"],3,"A bridge full-wave rectifier uses four diodes."],
+["Electronics","Transistor","Medium","In common-emitter configuration, input is applied between?",["Collector-base","Base-emitter","Collector-emitter","Collector-ground"],1,"CE input is between base and emitter."]
+];
+const SY={"Mechanics & Waves":["Galilean invariance & frames","Equivalence principle","Pseudo force & Coriolis","Planetary motion & Kepler","Gravitational potential","Momentum & rocket equation","Moment of inertia & rolling","Angular momentum","Beats & Lissajous","LCR & resonance","Fourier series"],"Electromagnetism":["Maxwell equations & EM waves","Displacement current","Travelling waves","Coaxial cable fields","Poynting vector","EM propagation"],"Optics":["Newton's rings","Michelson interferometer","Coherence","LASER","Fresnel diffraction","Fraunhofer diffraction","Polarisation","Brewster's law","Optic axis","Nicol prism","Huygens double diffraction"],"Electronics":["Semiconductors","P-N junction","Transistor","Rectifiers & filters","Common-emitter amplifier"]};
+let D=JSON.parse(localStorage.getItem("cuetGeoV5")||'{"solved":0,"correct":0,"mistakes":[],"confidence":[],"history":[],"status":{},"sessions":[]}');
+let queue=[],pos=0,answered=false,target=10,sessionStart=0,timer=null;
+function save(){localStorage.setItem("cuetGeoV5",JSON.stringify(D));render()}
+function showPage(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.p===id));render()}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>showPage(b.dataset.p));
+function start(n,kind){target=n;pos=0;let pool=[...Q];if(kind==="Hard")pool=pool.filter(x=>x[2]==="Hard");if(kind==="Weakness"){pool.sort((a,b)=>rate(a[0])-rate(b[0]))}pool.sort(()=>Math.random()-.5);if(n===0)queue=pool;else{queue=[];while(queue.length<n)queue.push(...pool);queue=queue.slice(0,n)}document.getElementById("mode").textContent=kind;sessionStart=Date.now();clearInterval(timer);timer=setInterval(()=>{let s=Math.floor((Date.now()-sessionStart)/1000);document.getElementById("timer").textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")},1000);showPage("practice");load()}
+function rate(s){let h=D.history.filter(x=>x.subject===s);return h.length?h.filter(x=>x.correct).length/h.length:0}
+function load(){answered=false;let x=queue[pos%queue.length];document.getElementById("tag").textContent=x[0]+" • "+x[1]+" • "+x[2];document.getElementById("q").textContent=x[3];document.getElementById("answers").innerHTML=x[4].map((a,i)=>`<button class="answer" onclick="answer(${i})">${String.fromCharCode(65+i)}. ${a}</button>`).join("");document.getElementById("feedback").innerHTML="";document.getElementById("confidence").classList.add("hidden");document.getElementById("next").classList.add("hidden");document.getElementById("progress").style.width=target?Math.min(100,pos/target*100)+"%":"100%"}
+function answer(i){if(answered)return;answered=true;let x=queue[pos%queue.length],ok=i===x[5];D.solved++;if(ok)D.correct++;D.history.push({subject:x[0],topic:x[1],correct:ok,date:Date.now()});if(!ok)D.mistakes.unshift({subject:x[0],topic:x[1],question:x[3],your:x[4][i],correct:x[4][x[5]],explanation:x[6],due:Date.now()+86400000});document.querySelectorAll(".answer").forEach((b,j)=>{if(j===x[5])b.classList.add("correct");if(j===i&&!ok)b.classList.add("wrong")});document.getElementById("feedback").innerHTML=`<div class="feedback"><b>${ok?"Correct!":"Incorrect."}</b> ${x[6]}</div>`;document.getElementById("confidence").classList.remove("hidden");save()}
+function confidence(v){D.confidence.push(v);document.getElementById("confidence").classList.add("hidden");document.getElementById("next").classList.remove("hidden");save()}
+function next(){if(target&&pos+1>=target){finish();return}pos++;load()}
+function finish(){clearInterval(timer);D.sessions.push({questions:pos+(answered?1:0),date:Date.now()});save();alert("Session complete!");showPage("home")}
+function render(){let acc=D.solved?Math.round(D.correct/D.solved*100):0,all=Object.values(SY).flat(),mastery=Math.round(all.reduce((a,t)=>a+(D.status[t]||0),0)/(all.length*4)*100),due=D.mistakes.filter(x=>x.due<=Date.now()).length;document.getElementById("mastery").textContent=mastery+"%";document.getElementById("solved").textContent=D.solved;document.getElementById("accuracy").textContent=D.solved?acc+"%":"—";document.getElementById("mistakesN").textContent=D.mistakes.length;document.getElementById("revisionSummary").textContent=due+" revision item(s) due now. "+D.mistakes.length+" total saved.";document.getElementById("mistakeList").innerHTML=D.mistakes.length?D.mistakes.map((m,i)=>`<div class="list"><b>${m.subject} • ${m.topic}</b><p>${m.question}</p><span class="muted">Your: ${m.your}<br>Correct: ${m.correct}</span><p>${m.explanation}</p><button class="btn" onclick="removeMistake(${i})">Reviewed</button></div>`).join(""):"<p class='muted'>No mistakes yet.</p>";let sl="";for(let [s,ts] of Object.entries(SY)){sl+=`<h3>${s}</h3>`;ts.forEach(t=>{let v=D.status[t]||0;sl+=`<div class="list row"><span>${t}</span><select onchange="setStatus('${t.replace(/'/g,"\\'")}',this.value)">${["Not started","Learning","Practicing","Strong","Mastered"].map((x,i)=>`<option value="${i}" ${i===v?"selected":""}>${x}</option>`).join("")}</select></div>`})}document.getElementById("syllabusList").innerHTML=sl;document.getElementById("statsList").innerHTML=`<div class="list row"><span>Questions solved</span><b>${D.solved}</b></div><div class="list row"><span>Accuracy</span><b>${D.solved?acc+"%":"—"}</b></div><div class="list row"><span>Mastery</span><b>${mastery}%</b></div><div class="list row"><span>Mistakes</span><b>${D.mistakes.length}</b></div><div class="list row"><span>Average confidence</span><b>${D.confidence.length?(D.confidence.reduce((a,b)=>a+b,0)/D.confidence.length).toFixed(1)+"/5":"—"}</b></div><div class="list row"><span>Sessions</span><b>${D.sessions.length}</b></div>`}
+function setStatus(t,v){D.status[t]=+v;save()}function removeMistake(i){D.mistakes.splice(i,1);save()}
+render();
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script></body></html>
