@@ -1,0 +1,103 @@
+{
+  "update_version": "PYQ-1.0",
+  "paper_code": "SCQP15",
+  "purpose": "Separate verified-source manifest for CUET PG Geophysics PYQs. Keep this separate from the generated practice bank.",
+  "sources": [
+    {
+      "year": 2026,
+      "status": "official_final_key",
+      "url": "https://cdnbbsr.s3waas.gov.in/s388a839f2f6f1427879fc33ee4acf4f66/uploads/2026/04/202604241966991543.pdf",
+      "note": "NTA final key for SCQP15 Geophysics."
+    },
+    {
+      "year": 2024,
+      "status": "official_final_key_copy",
+      "url": "https://www.jammuuniversity.ac.in/sites/default/files/inline-files/FINAL_KEY_CUETPG_2024_OPT_ID.pdf",
+      "note": "Final key identifies 20.03.2024, Shift 3, SCQP15 Geophysics."
+    },
+    {
+      "year": 2024,
+      "status": "question_and_solution_copy",
+      "url": "https://zollege.in/news/e-972-cuet-pg-geophysics-question-paper-with-answer-key-pdf-march-20-shift-3-zpyp/",
+      "note": "Question text and worked solutions for 2024 Geophysics Shift 3."
+    },
+    {
+      "year": 2025,
+      "status": "question_and_solution_copy",
+      "url": "https://static.zollege.in/public/image/CUET_PG_2025_Geophysics_Question_Paper_with_Solution_7b3cf75408af885e1cd1839af378d0f2.pdf",
+      "note": "Use NTA final key as authoritative for answers."
+    },
+    {
+      "year": 2023,
+      "status": "question_paper_copy",
+      "url": "https://docs.aglasem.com/view/7222767a-5869-11ee-a918-0a5e36bc6706",
+      "note": "Geophysics question paper copy; cross-check answers against the corresponding key."
+    }
+  ],
+  "app_schema": {
+    "database_file": "pyq.json",
+    "keep_separate_from": "questions.json",
+    "required_fields": [
+      "id",
+      "year",
+      "question_id",
+      "topic",
+      "question",
+      "options",
+      "answer",
+      "explanation",
+      "formula",
+      "difficulty",
+      "source",
+      "verified"
+    ],
+    "fresh_session": "Exclude every PYQ already attempted.",
+    "mistake_session": "Only PYQs previously answered incorrectly may repeat here.",
+    "answer_policy": "Cross-check against NTA final answer key whenever available."
+  },
+  "verified_2024_examples": [
+    {
+      "id": "PYQ2024-S3-Q01",
+      "question_id": "Q1",
+      "topic": "Optics / Newton's rings",
+      "summary": "Identify the geometry of the air film between a plano-convex lens and glass plate.",
+      "answer_option": 3,
+      "answer": "Wedge-shaped air film",
+      "explanation": "The lens touches the plate near the centre and the separation increases outward, producing a wedge-like thin film. Interference in this film produces Newton's rings.",
+      "source": "https://zollege.in/news/e-972-cuet-pg-geophysics-question-paper-with-answer-key-pdf-march-20-shift-3-zpyp/"
+    },
+    {
+      "id": "PYQ2024-S3-Q16",
+      "question_id": "Q16",
+      "topic": "LCR circuits",
+      "summary": "Find the phase-angle relation between current and emf in a series LCR circuit.",
+      "answer_option": 1,
+      "answer": "tan(phi)=(X_L-X_C)/R",
+      "explanation": "The impedance has resistive part R and net reactive part X_L-X_C, so tan(phi)=(X_L-X_C)/R.",
+      "formula": "X_L=omega L; X_C=1/(omega C)",
+      "source": "https://zollege.in/news/e-972-cuet-pg-geophysics-question-paper-with-answer-key-pdf-march-20-shift-3-zpyp/"
+    },
+    {
+      "id": "PYQ2024-S3-Q19",
+      "question_id": "Q19",
+      "topic": "Optics / Brewster's law",
+      "summary": "Choose the correct form of Brewster's law.",
+      "answer_option": 4,
+      "answer": "mu=tan(i_B)",
+      "explanation": "For incidence from air, Brewster's law is mu=tan(i_B). At this angle the reflected beam is plane-polarized.",
+      "formula": "mu=tan(i_B)",
+      "source": "https://zollege.in/news/e-972-cuet-pg-geophysics-question-paper-with-answer-key-pdf-march-20-shift-3-zpyp/"
+    },
+    {
+      "id": "PYQ2024-S3-Q20",
+      "question_id": "Q20",
+      "topic": "Diffraction grating",
+      "summary": "Find the highest observable order for 5000 lines/cm and wavelength 5 x 10^-5 cm.",
+      "answer_option": 4,
+      "answer": "4th order",
+      "explanation": "d=1/5000=2 x 10^-4 cm. Since n lambda <= d, n_max=floor(d/lambda)=4.",
+      "formula": "d sin(theta)=n lambda",
+      "source": "https://zollege.in/news/e-972-cuet-pg-geophysics-question-paper-with-answer-key-pdf-march-20-shift-3-zpyp/"
+    }
+  ]
+}
