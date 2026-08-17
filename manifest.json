@@ -1,10 +1,10 @@
 {
-  "name": "CUET PG Geophysics V6",
-  "short_name": "CUET Geo V6",
+  "name": "CUET PG Geophysics V7",
+  "short_name": "CUET Geo",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f5f7fb",
-  "theme_color": "#111827",
+  "background_color": "#070b16",
+  "theme_color": "#080d19",
   "icons": [
     {
       "src": "icon.svg",
