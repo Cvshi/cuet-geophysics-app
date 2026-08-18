@@ -1,15 +1,1 @@
-{
-  "name": "CUET PG Geophysics V8",
-  "short_name": "CUET Geo",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#070b16",
-  "theme_color": "#080d19",
-  "icons": [
-    {
-      "src": "icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
-    }
-  ]
-}
+{"name":"CUET PG Geophysics V9","short_name":"CUET Geo","start_url":"./index.html","display":"standalone","background_color":"#070a13","theme_color":"#080b16","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
